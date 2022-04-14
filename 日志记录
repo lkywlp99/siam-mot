@@ -1,2 +1,9 @@
-
 ImportError: No module named 'decord'
+pip install decord
+
+提示没有ffmeg
+用apt-get install ffmeg
+
+pytorch版本一定要是1.7.1+cuda11.0,不能改变
+
+maskrcnn-benchmark要和siammot装在一个环境里面
