@@ -7,3 +7,19 @@ pip install decord
 pytorch版本一定要是1.7.1+cuda11.0,不能改变
 
 maskrcnn-benchmark要和siammot装在一个环境里面
+
+4.16
+因为算力不足的原因，使用checkpoint实现断点续训，
+每100iter保存一遍断点，并且在训练结束的时候也保存好模型参数
+state_dict = net.state_dict()
+torch.save(state_dict , path)保存模型参数
+
+下一次训练的时候把iter增加，读取上次训练最后一次断点的模型参数继续训练
+
+
+
+遇到的问题：我在服务器上训练好了10000iter的模型后，想在本地继续训练，但是文件路径一直对不上，原本我以为是因为配置了ssh服务器后地址自动映射导致的问题，但是别的地址都没出现问题，
+在debug后找到原因，原本在保存断点的文件的时候在服务器中的路径时/user-data/siam-mot，读取参数的时候导致在本地无法找到。
+解决：在本地和服务器续训的的时候改一下last_checkpoint里的参数。
+
+
